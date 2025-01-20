@@ -1,0 +1,19 @@
+- name: Install NGINX on destination server
+  hosts: servers  # This refers to the 'servers' group in the inventory
+  become: yes      # Ensure the tasks run with elevated privileges (sudo)
+
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+    - name: Install NGINX
+      apt:
+        name: nginx
+        state: present
+
+    - name: Ensure NGINX is running
+      service:
+        name: nginx
+        state: started
+        enabled: yes
